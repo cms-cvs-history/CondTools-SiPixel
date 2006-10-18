@@ -1,0 +1,13 @@
+<use name=FWCore/Framework>
+<use name=Foundation/PluginManager>
+<use name=FWCore/ParameterSet>
+<use name=Geometry/Records>
+<use name=Geometry/TrackerGeometryBuilder>
+<use name=CondFormats/SiPixelObjects>
+<use name=CondCore/DBOutputService>
+
+<flags SEAL_PLUGIN_NAME="SiPixelSiPixelCondObjBuilder">
+<library file=*.cc name=SiPixelSiPixelCondObjBuilder>
+</library>
+
+
