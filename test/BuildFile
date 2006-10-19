@@ -6,16 +6,6 @@
 <use name=CondFormats/SiPixelObjects>
 <use name=CondCore/DBOutputService>
 
-<flags SEAL_PLUGIN_NAME="testSiPixelSiPixelCondObj">
-<library file=*.cc name=testSiPixelSiPixelCondObj>
+<library file="*.cc" name=testCondToolsSiPixel>
+<flags SEAL_PLUGIN_NAME="testCondToolsSiPixel">
 </library>
-
-<export>
-<lib name=testSiPixelSiPixelCondObj><use name=FWCore/Framework>
-<use name=Foundation/PluginManager>
-<use name=FWCore/ParameterSet>
-<use name=Geometry/Records>
-<use name=Geometry/TrackerGeometryBuilder>
-<use name=CondFormats/SiPixelObjects>
-<use name=CondCore/DBOutputService>
-</export>
