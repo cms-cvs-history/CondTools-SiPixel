@@ -1,0 +1,10 @@
+block SiPixelGainCalibrationServiceParameters = {
+
+    #Parameter to access data from DB 
+    bool UseCalibDataFromDB  = true
+
+    #If UseCalibDataFromDB  = false the following parameters will be used	
+    double PedestalValue = 25.
+    double GainValue     = 25.
+
+}
