@@ -4,7 +4,7 @@ block SiPixelGainCalibrationServiceParameters = {
     bool UseCalibDataFromDB  = true
 
     #If UseCalibDataFromDB  = false the following parameters will be used	
-    double PedestalValue = 25.
-    double GainValue     = 25.
+    double PedestalValue = -28.2
+    double GainValue     =   2.80
 
 }
