@@ -1,0 +1,12 @@
+
+  es_source = PoolDBESSource {
+    string timetype = "runnumber"
+    string connect = "sqlite_file:prova.db"
+    untracked string catalog = "xmlcatalog_file:prova_dbcatalog.xml"
+    VPSet toGet={ {string record= "SiPixelGainCalibrationRcd" string tag ="mytest_p"} } 
+    PSet DBParameters = { 
+	untracked string authenticationPath = "./"  
+	untracked int32 messageLevel = 1
+	untracked bool loadBlobStreamer = true
+	}
+  }
