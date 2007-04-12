@@ -11,5 +11,5 @@
 <use name=CondTools/SiPixel>
 
 <library file="*.cc" name=testCondToolsSiPixel>
-<flags SEAL_PLUGIN_NAME="testCondToolsSiPixel">
+<flags EDM_PLUGIN=1>
 </library>
