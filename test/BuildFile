@@ -7,7 +7,6 @@
 <use name=Geometry/TrackerGeometryBuilder>
 <use name=CondFormats/SiPixelObjects>
 <use name=CondCore/DBOutputService>
-<use name=SimTracker/SiPixelDigitizer>
 <use name=CondTools/SiPixel>
 
 <library file="*.cc" name=testCondToolsSiPixel>
