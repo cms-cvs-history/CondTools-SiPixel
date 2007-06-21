@@ -1,7 +1,8 @@
 block SiPixelGainCalibrationServiceParameters = {
 
-    #Parameter to access data from DB 
-    bool UseCalibDataFromDB  = true
+    # Parameter to access data from DB
+    # DOES NOT use DB by default
+    bool UseCalibDataFromDB = false
 
     #If UseCalibDataFromDB  = false the following parameters will be used	
     double PedestalValue =  28.2
