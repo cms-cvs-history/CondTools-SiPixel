@@ -1,13 +1,5 @@
 block SiPixelGainCalibrationServiceParameters = {
 
-    # Parameter to access data from DB
-    # DOES NOT use DB by default
-    bool UseCalibDataFromDB = false
-
-    #If UseCalibDataFromDB  = false the following parameters will be used	
-    double PedestalValue =  28.2
-    double GainValue     =   2.80
-
     #Ranges for 8-bit encoding/decoding
     double MinGain 	= 2.5
     double MaxGain      = 3.0
