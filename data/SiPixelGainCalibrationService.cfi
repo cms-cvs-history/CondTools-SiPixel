@@ -1,9 +1,11 @@
 block SiPixelGainCalibrationServiceParameters = {
 
-    #Ranges for 8-bit encoding/decoding
-    double MinGain 	= 2.5
-    double MaxGain      = 3.0
-    double MinPed       = 25.0
-    double MaxPed       = 35.0
+    # Ranges for 8-bit encoding/decoding
+    # (obsolete: ranges are stored in the calibration object)
+    #
+    #double MinGain 	= 2.5
+    #double MaxGain      = 3.0
+    #double MinPed       = 25.0
+    #double MaxPed       = 35.0
 
 }
