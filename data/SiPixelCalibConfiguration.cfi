@@ -22,6 +22,8 @@
    replace sipixelcalib_essource.DBParameters.authenticationPath = "/afs/cern.ch/cms/DB/conddb"
 #   replace sipixelcalib_essource.connect = "frontier://FrontierDev/CMS_COND_PIXEL"
 #   replace sipixelcalib_essource.DBParameters.authenticationMethod = 0
-   replace sipixelcalib_essource.timetype ="runnumber"
+
+#   seems to have disappeard in 20X
+#   replace sipixelcalib_essource.timetype ="runnumber"
    replace sipixelcalib_essource.DBParameters.messageLevel = 0
 
