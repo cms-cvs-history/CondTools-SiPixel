@@ -23,7 +23,6 @@
 #   replace sipixelcalib_essource.connect = "frontier://FrontierDev/CMS_COND_PIXEL"
 #   replace sipixelcalib_essource.DBParameters.authenticationMethod = 0
 
-#   seems to have disappeard in 20X
-#   replace sipixelcalib_essource.timetype ="runnumber"
+
    replace sipixelcalib_essource.DBParameters.messageLevel = 0
 
