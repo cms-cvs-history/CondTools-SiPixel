@@ -127,10 +127,11 @@ def main(argv):
         print '** calib.dat filename set to', calibFilename
     
     # set the tagname if not provided
-    tagName = getTagNameFromFile(calibFilename, debugMode)
     if not tagName:
-        print 'Unknown calibration type from calib.dat file!'
-        sys.exit(2)
+        tagName = getTagNameFromFile(calibFilename, debugMode)
+        if not tagName:
+            print 'Unknown calibration type from calib.dat file!'
+            sys.exit(2)
     if debugMode:
         print '** tag name set to', tagName
         
@@ -222,7 +223,7 @@ def main(argv):
         
     if writeChecker:
         print 'PixelPopConCalibChecker cfg written as', writeCheckerFilename
-        print 'To check if the popcon transfer was successful, run "cmsRun "' + writeCheckerFilename
+        print 'To check if the popcon transfer was successful, run "cmsRun ' + writeCheckerFilename + '"'
             
 def getTagNameFromFile(filename, debugMode = False):
     """
