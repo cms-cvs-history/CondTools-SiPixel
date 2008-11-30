@@ -24,7 +24,8 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
   toPut = cms.VPSet
   (
     cms.PSet( record = cms.string('PixelCaenChannelIsOnRcd'), tag = cms.string('IsOn') ),
-    cms.PSet( record = cms.string('PixelCaenChannelIMonRcd'), tag = cms.string('IMon') )
+    cms.PSet( record = cms.string('PixelCaenChannelIMonRcd'), tag = cms.string('IMon') ),
+    cms.PSet( record = cms.string('PixelCaenChannelRcd'), tag = cms.string('All') )
   )
 )
 
@@ -36,10 +37,9 @@ process.PixelCaenChannelIsOn = cms.EDAnalyzer("PixelPopConBoolAnalyzer",
 
   Source = cms.PSet
   (
+    authenticationPath = cms.string('.'),
     dbName = cms.string('CMSONR'),
-    user = cms.string('CMS_PXL_PIXEL_R'),
-    table = cms.string('DCSLASTVALUE_ON'),
-    column = cms.string('ACTUAL_ISON'),
+    tables = cms.vstring('DCSLASTVALUE_ON')
   )
 )
 
@@ -51,11 +51,24 @@ process.PixelCaenChannelIMon = cms.EDAnalyzer("PixelPopConFloatAnalyzer",
 
   Source = cms.PSet
   (
+    authenticationPath = cms.string('.'),
     dbName = cms.string('CMSONR'),
-    user = cms.string('CMS_PXL_PIXEL_R'),
-    table = cms.string('DCSLASTVALUE_CURRENT'),
-    column = cms.string('ACTUAL_IMON'),
+    tables = cms.vstring('DCSLASTVALUE_CURRENT')
   )
 )
 
-process.p = cms.Path(process.PixelCaenChannelIsOn*process.PixelCaenChannelIMon)
+process.PixelCaenChannel = cms.EDAnalyzer("PixelPopConCaenChannelAnalyzer",
+
+  record = cms.string('PixelCaenChannelRcd'),
+  loggingOn = cms.untracked.bool(True),
+  SinceAppendMode = cms.bool(True),
+
+  Source = cms.PSet
+  (
+    authenticationPath = cms.string('.'),
+    dbName = cms.string('CMSONR'),
+    tables = cms.vstring('DCSLASTVALUE_ON', 'DCSLASTVALUE_CURRENT', 'DCSLASTVALUE_VOLTAGE')
+  )
+)
+
+process.p = cms.Path(process.PixelCaenChannel)
