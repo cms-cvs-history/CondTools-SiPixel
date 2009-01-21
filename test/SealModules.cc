@@ -21,8 +21,6 @@ using cms::SiPixelCondObjOfflineBuilder;
 using cms::SiPixelCondObjOfflineReader;
 using cms::SiPixelCondObjAllPayloadsReader;
 using cms::SiPixelPerformanceSummaryBuilder;
-using ::SiPixelBadModuleByHandBuilder;
-using ::SiPixelBadModuleReader;
 using cms::SiPixelPerformanceSummaryReader;
 
 
