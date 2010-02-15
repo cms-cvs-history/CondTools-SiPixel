@@ -1,5 +1,6 @@
 <use name=boost>
 <use name=root>
+<use name=CommonTools/UtilAlgos>
 <use name=Geometry/Records>
 <use name=Geometry/TrackerGeometryBuilder>
 <use name=CondCore/DBOutputService>
