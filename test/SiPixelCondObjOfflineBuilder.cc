@@ -84,7 +84,8 @@ SiPixelCondObjOfflineBuilder::analyze(const edm::Event& iEvent, const edm::Event
        // Get the module sizes.
        int nrows = topol.nrows();      // rows in x
        int ncols = topol.ncolumns();   // cols in y
-       //std::cout << " ---> PIXEL DETID " << detid << " Cols " << ncols << " Rows " << nrows << std::endl;
+       int numROCX = topol.rocsX(), numROCY = topol.rocsY(), rowsPerROC=topol.rowsperroc();
+      //std::cout << " ---> PIXEL DETID " << detid << " Cols " << ncols << " Rows " << nrows << std::endl;
 
        double meanPedWork = meanPed_;
        double rmsPedWork = rmsPed_;
@@ -98,7 +99,8 @@ SiPixelCondObjOfflineBuilder::analyze(const edm::Event& iEvent, const edm::Event
 	 rmsGainWork = rmsGainFPix_;
        }
        
-       PixelIndices pIndexConverter( ncols , nrows );
+       PixelIndices pIndexConverter( ncols , nrows,  numROCX, numROCY );
+       //       PixelIndices pIndexConverter( ncols , nrows  );
 
        std::vector<char> theSiPixelGainCalibration;
 
@@ -167,7 +169,7 @@ SiPixelCondObjOfflineBuilder::analyze(const edm::Event& iEvent, const edm::Event
 //  	   ped  = 28.2;
 
            //if in the second row of rocs (i.e. a 2xN plaquette) add an offset (if desired) for testing
-           if (j >= 80) 
+           if (j >=rowsPerROC) 
            {
               ped += secondRocRowPedOffset_;
               gain += secondRocRowGainOffset_;
@@ -194,11 +196,11 @@ SiPixelCondObjOfflineBuilder::analyze(const edm::Event& iEvent, const edm::Event
 	   else if(isNoisy) // dead pixel
 	     //	     std::cout << "filling pixel as dead for detid " << detid <<", col " << i << ", row" << j <<  std::endl;
 	     SiPixelGainCalibration_->setNoisyPixel(theSiPixelGainCalibration);
-           if ((j + 1)  % 80 == 0) // fill the column average after ever ROC!
+           if ((j + 1)  % rowsPerROC == 0) // fill the column average after ever ROC!
            {
-              float averageGain      = totalGain/static_cast<float>(80);
-              //std::cout << "Filling gain " << averageGain << " for col: " << i << " row: " << j << std::endl;
-              SiPixelGainCalibration_->setDataGain( averageGain , 80, theSiPixelGainCalibration);
+              float averageGain      = totalGain/static_cast<float>(rowsPerROC);
+	      //              std::cout << "Filling gain " << averageGain << " for col: " << i << " row: " << j << std::endl;
+              SiPixelGainCalibration_->setDataGain( averageGain , rowsPerROC, theSiPixelGainCalibration);
               totalGain = 0;
            }
 
@@ -207,7 +209,11 @@ SiPixelCondObjOfflineBuilder::analyze(const edm::Event& iEvent, const edm::Event
 
        SiPixelGainCalibrationOffline::Range range(theSiPixelGainCalibration.begin(),theSiPixelGainCalibration.end());
        if( !SiPixelGainCalibration_->put(detid,range, ncols) )
-	 edm::LogError("SiPixelCondObjOfflineBuilder")<<"[SiPixelCondObjOfflineBuilder::analyze] detid already exists"<<std::endl;
+	 { edm::LogError("SiPixelCondObjOfflineBuilder")<<"[SiPixelCondObjOfflineBuilder::analyze] detid already exists"<<std::endl;
+	 }
+       else 
+	 { std::cout<<"Detector "<<detid<<" with ncols = "<<ncols<<std::endl;
+	 }
      }
    }
    std::cout << " ---> PIXEL Modules  " << nmodules  << std::endl;
@@ -233,14 +239,14 @@ SiPixelCondObjOfflineBuilder::analyze(const edm::Event& iEvent, const edm::Event
      edm::LogError("SiPixelCondOfflineBuilder") << " db service unavailable";
      return;
    } else { edm::LogInfo("SiPixelCondOfflineBuilder") << " DB service OK"; }
-
-   try{
-     if( mydbservice->isNewTagRequest(recordName_.c_str()) ){
-         mydbservice->createNewIOV<SiPixelGainCalibrationOffline>(
-             SiPixelGainCalibration_, mydbservice->beginOfTime(), mydbservice->endOfTime(),recordName_.c_str());
-     } else {
-         mydbservice->appendSinceTime<SiPixelGainCalibrationOffline>(
-            SiPixelGainCalibration_, mydbservice->currentTime(),recordName_.c_str());
+   
+   try {
+     if( mydbservice->isNewTagRequest(recordName_.c_str()) ){ std::cout<<"New IOV"<<std::endl;
+     mydbservice->createNewIOV<SiPixelGainCalibrationOffline>(
+	SiPixelGainCalibration_, mydbservice->beginOfTime(), mydbservice->endOfTime(),recordName_.c_str());
+     } else { std::cout<<"Append IOV"<<std::endl;
+     mydbservice->appendSinceTime<SiPixelGainCalibrationOffline>(
+	SiPixelGainCalibration_, mydbservice->currentTime(),recordName_.c_str());
      }
      edm::LogInfo(" --- all OK");
    } 

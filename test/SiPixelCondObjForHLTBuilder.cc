@@ -84,6 +84,7 @@ SiPixelCondObjForHLTBuilder::analyze(const edm::Event& iEvent, const edm::EventS
        // Get the module sizes.
        int nrows = topol.nrows();      // rows in x
        int ncols = topol.ncolumns();   // cols in y
+       int numROCX = topol.rocsX(), numROCY = topol.rocsY();
        //std::cout << " ---> PIXEL DETID " << detid << " Cols " << ncols << " Rows " << nrows << std::endl;
        
        double meanPedWork = meanPed_;
@@ -98,7 +99,8 @@ SiPixelCondObjForHLTBuilder::analyze(const edm::Event& iEvent, const edm::EventS
 	 rmsGainWork = rmsGainFPix_;
        }
        
-       PixelIndices pIndexConverter( ncols , nrows );
+       PixelIndices pIndexConverter( ncols , nrows,  numROCX, numROCY );
+       //       PixelIndices pIndexConverter( ncols , nrows );
 
        std::vector<char> theSiPixelGainCalibration;
 

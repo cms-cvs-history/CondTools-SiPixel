@@ -8,7 +8,8 @@ process.MessageLogger.cout = cms.untracked.PSet(threshold = cms.untracked.string
 
 process.load("Configuration.StandardSequences.MagneticField_cff")
 
-process.load("Geometry.CMSCommonData.cmsIdealGeometryXML_cfi")
+#process.load("Geometry.CMSCommonData.cmsIdealGeometryXML_cfi")
+process.load("SLHCUpgradeSimulations.Geometry.longbarrel_cmsIdealGeometryXML_cff")
 
 process.load("CalibTracker.Configuration.TrackerAlignment.TrackerAlignment_Fake_cff")
 
@@ -48,7 +49,7 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
         enableReadOnlySessionOnUpdateConnection = cms.untracked.bool(False)
     ),
     timetype = cms.untracked.string('runnumber'),
-    connect = cms.string('sqlite_file:/tmp/fblekman/freyatest.db'),
+    connect = cms.string('sqlite_file:/tmp/ireid/lbtest.db'),
     toPut = cms.VPSet(cms.PSet(
             record = cms.string('SiPixelFedCablingMapRcd'),
             tag = cms.string('SiPixelFedCablingMap_v14')
@@ -108,18 +109,18 @@ process.TemplateUploader = cms.EDAnalyzer("SiPixelTemplateDBObjectUploader",
 
 ###### QUALITY OBJECT MAKER #######
 process.QualityObjectMaker = cms.EDFilter("SiPixelBadModuleByHandBuilder",
-    BadModuleList = cms.untracked.VPSet(cms.PSet(
-        errortype = cms.string('whole'),
-        detid = cms.uint32(302197784)
-         ),
-        cms.PSet(
-            errortype = cms.string('whole'),
-            detid = cms.uint32(302195232)
-        ),
-        cms.PSet(
-            errortype = cms.string('whole'),
-            detid = cms.uint32(344014348)
-        )),
+    BadModuleList = cms.untracked.VPSet(#cms.PSet(
+#        errortype = cms.string('whole'),
+#        detid = cms.uint32(302197784)
+#         ),
+#        cms.PSet(
+#            errortype = cms.string('whole'),
+#            detid = cms.uint32(302195232)
+#        ),
+#        cms.PSet(
+#            errortype = cms.string('whole'),
+#            detid = cms.uint32(344014348)
+        ),#),
     Record = cms.string('SiPixelQualityRcd'),
     SinceAppendMode = cms.bool(True),
     IOVMode = cms.string('Run'),
@@ -167,7 +168,7 @@ process.SiPixelLorentzAngleSim = cms.EDFilter("SiPixelLorentzAngleDB",
 ###### OFFLINE GAIN OBJECT ######
 process.SiPixelCondObjOfflineBuilder = cms.EDFilter("SiPixelCondObjOfflineBuilder",
     process.SiPixelGainCalibrationServiceParameters,
-    numberOfModules = cms.int32(2000),
+    numberOfModules = cms.int32(15000),
     deadFraction = cms.double(0.00),
     noisyFraction = cms.double(0.00),
     appendMode = cms.untracked.bool(False),
@@ -189,7 +190,7 @@ process.SiPixelCondObjOfflineBuilder = cms.EDFilter("SiPixelCondObjOfflineBuilde
 
 process.SiPixelCondObjOfflineBuilderSim = cms.EDFilter("SiPixelCondObjOfflineBuilder",
     process.SiPixelGainCalibrationServiceParameters,
-    numberOfModules = cms.int32(2000),
+    numberOfModules = cms.int32(50000),
     deadFraction = cms.double(0.00),
     noisyFraction = cms.double(0.00),
     appendMode = cms.untracked.bool(False),
@@ -213,7 +214,7 @@ process.SiPixelCondObjOfflineBuilderSim = cms.EDFilter("SiPixelCondObjOfflineBui
 ##### HLT GAIN OBJECT #####
 process.SiPixelCondObjForHLTBuilder = cms.EDFilter("SiPixelCondObjForHLTBuilder",
     process.SiPixelGainCalibrationServiceParameters,
-    numberOfModules = cms.int32(2000),
+    numberOfModules = cms.int32(50000),
     deadFraction = cms.double(0.00),
     noisyFraction = cms.double(0.00),
     appendMode = cms.untracked.bool(False),
@@ -230,7 +231,7 @@ process.SiPixelCondObjForHLTBuilder = cms.EDFilter("SiPixelCondObjForHLTBuilder"
 
 process.SiPixelCondObjForHLTBuilderSim = cms.EDFilter("SiPixelCondObjForHLTBuilder",
     process.SiPixelGainCalibrationServiceParameters,
-    numberOfModules = cms.int32(2000),
+    numberOfModules = cms.int32(50000),
     deadFraction = cms.double(0.00),
     noisyFraction = cms.double(0.00),
     appendMode = cms.untracked.bool(False),
@@ -249,12 +250,12 @@ process.SiPixelCondObjForHLTBuilderSim = cms.EDFilter("SiPixelCondObjForHLTBuild
 process.p = cms.Path(
     process.SiPixelLorentzAngle*
     process.MapWriter*
-    process.SiPixelCondObjOfflineBuilder*
-    process.SiPixelCondObjForHLTBuilder*
-    process.TemplateUploader*
-    process.QualityObjectMaker*
-    process.SiPixelLorentzAngleSim*
-    process.SiPixelCondObjForHLTBuilderSim*
-    process.SiPixelCondObjOfflineBuilderSim
+    process.SiPixelCondObjOfflineBuilder#*
+#    process.SiPixelCondObjForHLTBuilder*
+#    process.TemplateUploader*
+#    process.QualityObjectMaker*
+#    process.SiPixelLorentzAngleSim*
+#    process.SiPixelCondObjForHLTBuilderSim*
+#    process.SiPixelCondObjOfflineBuilderSim
     )
 
